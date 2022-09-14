@@ -1,72 +1,87 @@
 import prisma from '../../lib/prisma';
-import type { Action, Load } from '@sveltejs/kit';
-import { validateEmail } from '$lib/utils';
+import { invalid, type Actions, type Load } from '@sveltejs/kit';
+import { validateEmail } from './utils/index';
 export const load: Load = async () => {
 	const data = await prisma.user.findMany();
-	//console.log('data', data);
 	return {
 		users: data
 	};
 };
 
-export const POST: Action<{ errors: string }> = async ({ request }) => {
-	const form = await request.formData();
+export const actions: Actions = {
+	default: async ({ request }) => {
+		const form = await request.formData();
 
-	const username = String(form.get('username'));
-	const email = String(form.get('email'));
-	const password = String(form.get('password'));
-	const repeatPassword = String(form.get('password-repeat'));
-	if (!username || username.length === 0 || username.length < 4) {
-		return {
-			status: 403,
-			errors: {
-				accountCreator: 'Please enter a username of at least 4 characters'
-			}
-		};
-	}
-
-	if (!validateEmail(email) || email.length === 0) {
-		return {
-			status: 403,
-			errors: {
-				accountCreator: 'Invalid email'
-			}
-		};
-	}
-
-	if (!password || password.length < 6) {
-		return {
-			status: 403,
-			errors: {
-				accountCreator: 'Please enter a password of at least 6 characters.'
-			}
-		};
-	}
-
-	if (!repeatPassword || repeatPassword !== password) {
-		return {
-			status: 403,
-			errors: {
-				accountCreator: 'Passwords do not match.'
-			}
-		};
-	}
-
-	try {
-		await prisma.user.create({
-			data: {
+		const username = String(form.get('username'));
+		const email = String(form.get('email'));
+		const password = String(form.get('password'));
+		const repeatPassword = String(form.get('password-repeat'));
+		if (!username || username.length === 0 || username.length < 4) {
+ 
+			return invalid(400, {
 				username,
 				email,
 				password,
-				repeatPassword
-			}
-		});
-	} catch (error) {
-		return {
-			status: 403,
-			errors: {
-				accountCreator: 'Email is already taken'
-			}
-		};
+				repeatPassword,
+				incorrect: true,
+				message: 'Please enter a username of at least 4 characters'
+			});
+		}
+
+		if (!validateEmail(email) || email.length === 0) {
+			return invalid(400, {
+				username,
+				email,
+				password,
+				repeatPassword,
+				incorrect: true,
+				message: 'Invalid email'
+			});
+		}
+
+		if (!password || password.length < 6) {
+			return invalid(400, {
+				email,
+				username,
+				password,
+				repeatPassword,
+				incorrect: true,
+				message: 'Please enter a password of at least 6 characters.'
+			});
+		}
+
+		if (!repeatPassword || repeatPassword !== password) {
+			return invalid(400, {
+				email,
+				username,
+				password,
+				repeatPassword,
+				incorrect: true,
+				message: 'Passwords do not match.'
+			});
+		}
+
+		try {
+			await prisma.user.create({
+				data: {
+					username,
+					email,
+					password,
+					repeatPassword
+				}
+			});
+			return { success: true };
+		} catch (error) {
+			return invalid(403, {
+				username,
+				email,
+				password,
+				repeatPassword,
+				incorrect:true,
+				message: 'Email is already taken'
+			});
+		}
 	}
 };
+
+

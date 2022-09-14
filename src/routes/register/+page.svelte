@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { validateEmail } from '$lib/utils';
+	import { applyAction } from '$app/forms';
+
+	import { goto, invalidateAll } from '$app/navigation';
+
+	import { validateEmail } from './utils/index';
 
 	import type { Prisma } from '@prisma/client';
 	import type { AccountCreationErrorType } from 'src/types';
+	import type { Action } from './$types';
 
-	import type { PageData } from '../../../.svelte-kit/types/src/routes/login/$types';
-	// export let data: PageData;
-	export let success: string;
 	export let accInputs: Prisma.UserCreateInput = {
 		email: '',
 		username: '',
@@ -18,10 +20,11 @@
 			...accInputs
 		}
 	};
-
-	const handleOnSubmit = async (e: Event) => {
+	export let form: Action;
+	async function handleSubmit(this: any, event: Event) {
+		const data = new FormData(this);
 		let formValid: boolean = true;
-		const form = e.target as HTMLFormElement;
+		const form = event.target as HTMLFormElement;
 
 		const { email, username, password, repeatPassword } = accInputs;
 		if (!username || username.length === 0 || username.length < 4) {
@@ -56,27 +59,28 @@
 		if (!formValid) {
 			return;
 		}
-
-		const response = await fetch('/register', {
-			method: 'post',
-			headers: { accept: 'application/json' },
-			body: new FormData(form)
+		const response = await fetch(this.action, {
+			method: 'POST',
+			body: data
 		});
-		if (response.ok) {
-			success = 'Account created!';
+		const result = await response.json();
+
+		if (result.type === 'success') {
+			// re-run all `load` functions, following the successful update
+			await invalidateAll();
+			form.reset();
+			setTimeout(() => {
+				goto('/');
+			}, 3000);
 		}
-		if (!response.ok) {
-			const { errors } = await response.json();
-			success = errors.accountCreator;
-			return;
-		}
-		form.reset();
-	};
+
+		applyAction(result);
+	}
 </script>
 
 <section>
 	<div>Welcome to Register</div>
-	<form method="POST" on:submit|preventDefault={handleOnSubmit}>
+	<form method="POST" on:submit|preventDefault={handleSubmit}>
 		<label for="username">
 			Username:
 			<input
@@ -128,7 +132,8 @@
 			/>
 			<span>{validationErrors.accountCreator.repeatPassword}</span>
 		</label>
-		{success ?? ''}
+		{form?.success ? 'Account Created' : ''}
+		{form?.message || ''}
 		<button type="submit">Register</button>
 	</form>
 </section>

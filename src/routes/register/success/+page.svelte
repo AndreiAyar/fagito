@@ -1,3 +1,3 @@
 <section>
-    <div>Account successfuly created!</div>
+	<div>Account successfuly created!</div>
 </section>
