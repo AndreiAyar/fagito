@@ -34,7 +34,7 @@ class="cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-xl 
 			<div class="card-body mt-2">{title}</div>
 
 			<div class="absolute bottom-3 left-4 font-bold">
-				{price} Lei
+				{price.toFixed(2)} Lei
 			</div>
 			<div class="absolute bottom-2 right-4 font-bold text-3xl">
 				<a href={url} target="_blank">👉</a>

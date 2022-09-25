@@ -35,6 +35,7 @@ export const actions: Actions = {
 			return invalid(400, { productExists: true });
 		}
 		try {
+			// eslint-disable-next-line no-useless-escape
 			const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
 			const domain = matches && matches[1]; // domain will be null if no match is found
 			const vendor = domain ? getAvailableDomains(domain) : null;
