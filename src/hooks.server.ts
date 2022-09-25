@@ -5,7 +5,8 @@ const { TokenExpiredError } = jwt;
 import { env } from '$env/dynamic/private';
 const SECRET = env.JWT_SECRET;
 type JwtPayload = {
-	user: string;
+	email: string;
+	username:string;
 };
 export const handle: Handle = async ({ event, resolve }) => {
 	const userToken = event.cookies.get('token');
@@ -17,7 +18,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		try {
 			if (oldRefreshToken) {
 				const currentUser = jwt.verify(oldRefreshToken, SECRET) as JwtPayload;
-				const { refreshToken, token } = generateTokens({ user: currentUser?.user });
+				const { refreshToken, token } = generateTokens({email: currentUser.email, username:currentUser.username});
 				// event.locals.user = currentUser.user;
 				event.cookies.set('token', token, {
 					// send cookie for every page
@@ -46,7 +47,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 					maxAge: 60 * 60 * 24 * 30
 				});
 
-				event.locals.userData = { ...event.locals.userData, username: currentUser.user };
+				event.locals.userData = { ...event.locals.userData, email: currentUser.email, username:currentUser.username };
 			}
 		} catch (error) {
 			event.cookies.set('token', '', {
@@ -70,7 +71,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (userToken && refreshToken) {
 		try {
 			const isUser = jwt.verify(userToken, SECRET) as JwtPayload;
-			event.locals.userData = { ...event.locals.userData, username: isUser.user };
+			event.locals.userData = { ...event.locals.userData, username: isUser.username };
 		} catch (err) {
 			if (err instanceof TokenExpiredError) {
 				const oldRefreshToken = refreshToken;

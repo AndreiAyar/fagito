@@ -11,3 +11,15 @@ export const generateTokens = (data:Record<string, unknown>):TokenTypes =>{
 		refreshToken
 	}
 }
+interface IObjectKeys {
+	[key: string]: number | string,
+  }
+ 
+export const getAvailableDomains = (url:string):string | number | null=>{
+ 
+	const availableURLs:IObjectKeys = {
+		'www.mega-image.ro':'Mega-Image',
+		'www.auchan.ro':'Auchan'
+	}
+   return url ? availableURLs[url] : url
+} 

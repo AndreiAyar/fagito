@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { applyAction } from '$app/forms';
-
 	import { goto, invalidateAll } from '$app/navigation';
 
 	import { validateEmail } from './utils/index';
@@ -78,12 +77,14 @@
 	}
 </script>
 
-<section>
-	<div>Welcome to Register</div>
+<section class="flex justify-center">
+ 
 	<form method="POST" on:submit|preventDefault={handleSubmit}>
 		<label for="username">
 			Username:
 			<input
+				minlength="4"
+				required
 				id="username"
 				aria-label="Username"
 				placeholder="Please enter a username"
@@ -97,19 +98,23 @@
 		<label for="email">
 			Email:
 			<input
+				required
 				id="email"
 				aria-label="Email"
 				placeholder="Please ender an email"
-				type="text"
+				type="email"
 				name="email"
 				bind:value={accInputs.email}
 			/>
 			<span>{validationErrors.accountCreator.email}</span>
 		</label>
+		Copy
 
 		<label for="password">
 			Password:
 			<input
+				required
+				minlength="6"
 				id="password"
 				aria-label="Enter your password"
 				placeholder="Please enter a password"
@@ -123,6 +128,8 @@
 		<label for="password-repeat">
 			Repeat password:
 			<input
+				required
+				minlength="6"
 				id="password-repeat"
 				aria-label="Repeat your password"
 				placeholder="Please repeat your password"
@@ -134,21 +141,24 @@
 		</label>
 		{form?.success ? 'Account Created' : ''}
 		{form?.message || ''}
-		<button type="submit">Register</button>
+		<button class="btn rounded-md 	bg-accent-300 btn-lg text-white">
+			
+			<span>Register</span>
+			<span>🍔 </span></button
+		>
 	</form>
 </section>
 
 <style>
 	form {
-		display: flex;
-		flex-direction: column;
 		width: 300px;
 		gap: 10px;
+		
+ 
 	}
-	input {
-		height: 25px;
-	}
+
 	label {
+		width: 300px;
 		display: flex;
 		flex-direction: column;
 	}

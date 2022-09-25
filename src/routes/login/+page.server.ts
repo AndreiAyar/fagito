@@ -37,7 +37,7 @@ export const actions: Actions = {
 				return invalid(403, { email, incorrect: true, message: 'Wrong username or password.' });
 			}
 
-			const { token, refreshToken } = generateTokens({ user: user.email });
+			const { token, refreshToken } = generateTokens({ email: user.email, username:user.username });
 
 			cookies.set('token', token, {
 				// send cookie for every page

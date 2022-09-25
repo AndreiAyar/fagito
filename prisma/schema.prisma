@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -17,6 +18,7 @@ model User {
   password       String?
   repeatPassword String?
   groceries      Groceries[]
+  posts Post[]
 }
 
 model Groceries {
@@ -25,20 +27,36 @@ model Groceries {
   updatedAt    DateTime       @updatedAt
   title        String
   description  String
-  url          String         @default("")
+  url          String         @default("") @unique
   lastPrice    Float
   priceHistory PriceHistory[]
   vendor       Vendor         @relation(fields: [vendorId], references: [id])
   vendorId     Int            @default(1)
   user         User           @relation(fields: [userId], references: [id])
   userId       Int
+  imageSrc     String         @default("")
+  priceUpdateStatus Int       @default(1) //1-Done, 2 - SQS Sent, 3 - Processing, 0 - fail
+  posts    Post[]
+}
+
+model Post {
+  id String @id @default(uuid())
+  title       String  @default("")
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+  slug String @unique
+  enabled Int @default(1)
+  content Json
+  groceries   Groceries[]  
 }
 
 model PriceHistory {
   id        Int       @id @default(autoincrement())
   createdAt DateTime  @default(now())
   price     Float
-  grocery   Groceries @relation(fields: [groceryId], references: [id])
+  grocery   Groceries @relation(fields: [groceryId], references: [id], onDelete: Cascade)
   groceryId Int
 }
 
