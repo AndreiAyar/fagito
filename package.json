@@ -47,12 +47,18 @@
 		"@editorjs/embed": "^2.5.3",
 		"@editorjs/header": "^2.6.2",
 		"@editorjs/list": "^1.7.0",
+		"@editorjs/table": "^2.0.4",
 		"@ngneat/falso": "^6.1.0",
 		"@prisma/client": "^4.3.1",
+		"aws-sdk": "^2.1225.0",
 		"axios": "^0.27.2",
 		"concat-stream": "^2.0.0",
+		"d3": "^7.6.1",
 		"editorjs-parser": "^1.5.3",
 		"jsonwebtoken": "^8.5.1",
+		"moment": "^2.29.4",
+		"node-fetch": "^3.2.10",
+		"upload-js": "^1.48.21",
 		"uuidv4": "^6.2.13"
 	}
 }

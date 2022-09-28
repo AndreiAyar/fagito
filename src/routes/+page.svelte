@@ -1,14 +1,15 @@
 <script lang="ts">
+	import type { PageData } from '.svelte-kit/types/src/routes/groceries/$types';
 	import Banner from './components/Banner/Banner.svelte';
 	import LatestProduct from './components/LatestProduct/LatestProduct.svelte';
 	import Pagination from './components/Pagination/Pagination.svelte';
 	import RecipeCard from './components/RecipeCard/RecipeCard.svelte';
-	let currentPage = 1;
-
-	const setCurrentPage = (n:number):void => {
-		currentPage = n
-		console.log('cc',currentPage)
-	}
+	// let currentPage = 1;
+	export let data:PageData;
+	// const setCurrentPage = (n:number):void => {
+	// 	currentPage = n
+	// 	console.log('cc',currentPage)
+	// }
 </script>
 
 <div>
@@ -26,12 +27,17 @@
 				viverra.
 			</p>
 			<div class="grid lg:grid-cols-3 gap-4 mx-20">
+				{#if data.response}
+				{#each data.response as post}
+				<RecipeCard  {post} />
+				{/each}
+				{/if}
+				<!-- <RecipeCard />
 				<RecipeCard />
 				<RecipeCard />
 				<RecipeCard />
 				<RecipeCard />
-				<RecipeCard />
-				<RecipeCard />
+				<RecipeCard /> -->
 			</div>
 		</div>
 	</div>
@@ -71,5 +77,5 @@
 			</div>
 		</div>
 	</div>
-	<Pagination currentPage={currentPage} range={20} onChange={setCurrentPage}/>
+	<!-- <Pagination currentPage={currentPage} range={20} onChange={setCurrentPage}/> -->
 </div>

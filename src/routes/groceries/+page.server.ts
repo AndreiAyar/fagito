@@ -2,11 +2,15 @@ import prisma from '$root/lib/prisma';
 import type { PageServerLoad } from '.svelte-kit/types/src/routes/$types';
 import { invalid, redirect, type Actions } from '@sveltejs/kit';
 import { getAvailableDomains } from '$root/lib/utils';
-import { env } from '$env/dynamic/private';
-export const load: PageServerLoad = async ({ locals }) => {
+ 
+export const load: PageServerLoad = async ({ locals, url }) => {
 	if (!locals.userData) {
 		throw redirect(302, '/');
 	}
+	const page = url.searchParams.get('page') || 0;
+
+	const perPage = 12;
+	const totalGroceries = await prisma.groceries.count();
 	const data = await prisma.groceries.findMany({
 		orderBy: { createdAt: 'desc' }, include:{
 			vendor:{
@@ -14,11 +18,16 @@ export const load: PageServerLoad = async ({ locals }) => {
 					title:true
 				}
 			}
-		}
+		},
+		skip: page === 0 ? 0 : (perPage * +page) - perPage,
+		take: perPage,
 	});
+	console.log('ss',page === 0 ? 0 : (perPage * +page) - perPage)
 	//await new Promise(resolve => setTimeout(()=> setTimeout(resolve, 3500)))
+	const totalPages = Math.ceil(totalGroceries / perPage)
 	return {
-		groceries: data
+		groceries: data,
+		totalPages
 	};
 };
 
@@ -49,7 +58,7 @@ export const actions: Actions = {
 						}
 					}
 				);
-				console.log('res', res);
+			 
 				if (res.status !== 200) {
 					return invalid(400, { message: 'Something went wrong!' });
 				}

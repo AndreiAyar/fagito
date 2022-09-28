@@ -1,29 +1,35 @@
-import prisma from '../../lib/prisma';
-import type { Actions } from '@sveltejs/kit';
-import { uuid } from 'uuidv4';
-import { uuidToBase64 } from '../register/utils';
-export const actions: Actions = {
-	addPost: async ({ request }) => {
-		const formData = request.formData();
-		const content = (await formData).get('content');
-		const title = (await formData).get('title');
-		await prisma.groceries.findUnique({
+import prisma from '$root/lib/prisma';
+import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+
+export const load: PageServerLoad = async ({ url }) => {
+	const page = url.searchParams.get('page') || 0;
+
+	const perPage = 9;
+	try {
+        const totalPosts = await prisma.post.count()
+		const response = await prisma.post.findMany({
+			skip: page === 0 ? 0 : (perPage * +page) - perPage,
+			take: perPage,
 			where: {
-				id: 22157
-			}
-		});
-    const uid = uuid();
-    const base64 = uuidToBase64(uid);
-		const response = await prisma.post.create({
-			data: {
-				authorId: 1,
-				slug: `${title}-${base64}`,
-				content: JSON.parse(content as string),
-				groceries: {
-					connect: [{ id: 22159 }, { id: 22162 }]
+				isDraft: false
+			},
+			include: {
+				author: {
+					select: {
+						username: true
+					}
 				}
+			},
+			orderBy: {
+				createdAt: 'desc'
 			}
 		});
-		return { success: true, slug:response.slug};
+        const totalPages = Math.ceil(totalPosts / perPage)
+		console.log(totalPages);
+		return { posts:response, totalPages };
+	} catch (error) {
+        //Everywhere like this !
+		throw redirect(302, '/');
 	}
 };

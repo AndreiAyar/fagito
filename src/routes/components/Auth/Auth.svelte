@@ -5,15 +5,24 @@
 </script>
 
 <div class="cursor-pointer flex items-center space-x-4">
-	<ul class="flex gap-4">
+	<ul class="flex gap-4 items-center">
 		<LightSwitch />
+		{#if data.username}
+			<li>
+				<a class="btn inline-block bg-yellow-500 text-white p-2 rounded-md " href="/addPost">{'Manage draft'}</a>
+			</li>
+		{/if}
 		{#if !data.username}
 			<li><a href="/login">Login</a></li>
+			<li><a href="/register">Register</a></li>
 		{/if}
-		{#if !data.username}<li><a href="/register">Register</a></li>{/if}
+		<li>
+			<a href="/posts">Posts</a>
+		</li>
 		<li>
 			<a href="/groceries">Groceries</a>
 		</li>
+	
 	</ul>
 	{#if data.username}
 		<Menu select={false} open={false} origin="tr">
@@ -28,7 +37,7 @@
 				<nav class="list-nav">
 					<ul>
 						<li><a href={'/'}>Account</a></li>
-						<hr/>
+						<hr />
 						<li><a href={'/logout'}>Log Out</a></li>
 					</ul>
 				</nav>

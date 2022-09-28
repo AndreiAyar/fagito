@@ -8,6 +8,7 @@ type JwtPayload = {
 	email: string;
 	username:string;
 };
+
 export const handle: Handle = async ({ event, resolve }) => {
 	const userToken = event.cookies.get('token');
 	const refreshToken = event.cookies.get('refreshToken');
@@ -64,7 +65,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 			}
 		}
 		const response = await resolve(event);
-
 		return response;
 	};
 
@@ -85,4 +85,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const response = await resolve(event);
 
 	return response;
+
+
 };
+

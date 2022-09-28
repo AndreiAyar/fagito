@@ -26,8 +26,9 @@ model Groceries {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   title        String
-  description  String
+  description  String         
   url          String         @default("") @unique
+  slug         String         @default("")
   lastPrice    Float
   priceHistory PriceHistory[]
   vendor       Vendor         @relation(fields: [vendorId], references: [id])
@@ -36,7 +37,19 @@ model Groceries {
   userId       Int
   imageSrc     String         @default("")
   priceUpdateStatus Int       @default(1) //1-Done, 2 - SQS Sent, 3 - Processing, 0 - fail
-  posts    Post[]
+  postGroceries PostGroceries[]
+}
+
+model PostGroceries {
+  id Int @id @default(autoincrement())
+  grocery Groceries @relation(fields: [groceryId], references: [id])
+  groceryId Int 
+  post Post @relation(fields: [postId], references: [id])
+  postId String
+  quantity Int
+  quantityUnit String
+  neededQuantity Int
+  neededQuantityUnit String
 }
 
 model Post {
@@ -47,9 +60,13 @@ model Post {
   author User @relation(fields: [authorId], references: [id])
   authorId Int
   slug String @unique
+  imageSrc String @default("")
+  description String @default("")
+  vendors Vendor[]
   enabled Int @default(1)
   content Json
-  groceries   Groceries[]  
+  isDraft Boolean @default(false)
+  postGroceries PostGroceries[]
 }
 
 model PriceHistory {
@@ -65,4 +82,5 @@ model Vendor {
   createdAt DateTime    @default(now())
   groceries Groceries[]
   title     String
+  posts Post[]
 }
