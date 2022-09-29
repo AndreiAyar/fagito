@@ -43,7 +43,7 @@
 				signal: controller.signal
 			});
 			let result = await response.json();
-			console.log('result', result);
+ 
 			if (result && result.foundEntries.length) {
 				searchData = result.foundEntries;
 			}
