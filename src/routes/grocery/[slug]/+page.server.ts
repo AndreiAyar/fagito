@@ -21,7 +21,8 @@ export const load: Load = async ({ params }) => {
 				SELECT "groceryId", to_char(date_trunc('day', "createdAt"), 'YYYY-MM-DD') as Date,  avg(price)  
 				FROM "PriceHistory" ph   
 				where "groceryId" = ${groceryId}
-				GROUP BY to_char(date_trunc('day', "createdAt"), 'YYYY-MM-DD'), "groceryId"
+				GROUP BY to_char(date_trunc('day', "createdAt"), 'YYYY-MM-DD'), "groceryId" 
+				ORDER BY to_char(date_trunc('day', "createdAt"), 'YYYY-MM-DD')
 			`;
 				console.log('prr', priceHistory);
 				return {product,priceHistory};

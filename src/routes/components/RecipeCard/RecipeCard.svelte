@@ -1,14 +1,8 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { Avatar } from '@brainandbones/skeleton';
 	import '@brainandbones/skeleton/styles/elements/cards.css';
 	export let post;
 </script>
-
-<!-- slotHeader="-mt-4 -mx-4"
-slotBody="space-y-4"
-slotFooter="flex justify-start items-center space-x-4"
-class="cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-xl overflow-hidden" -->
 
 <a href={`/posts/${post.slug}`} style="text-decoration:none !important" class="text-white">
 	<div
@@ -16,10 +10,16 @@ class="cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-xl 
 	>
 		<header class="relative">
 			<div
-				class="bg-gray-100 rounded-3xl font-semibold min-w-[165px]  h-12 p-2.5 flex justify-between items-center absolute -bottom-4 right-2"
+				class="bg-gray-100 rounded-3xl font-semibold min-w-[145px] justify-center h-12 p-2.5 flex   gap-2 items-center absolute -bottom-4 right-2"
 			>
-				<Avatar class="w-10 h-10" src="https://i.pravatar.cc/" />
-				<div class="text-gray-900">{post.author.username}</div>
+				<Avatar
+					class="w-10 h-10"
+					initials={`${post.author.username
+						.split(' ')
+						.map((n) => n[0])
+						.join('')}`}
+				/>
+				<div class="text-gray-900 text-center">{post.author.username}</div>
 			</div>
 			<img alt="Header" class="w-full h-[300px] object-cover" src={post.imageSrc} />
 		</header>

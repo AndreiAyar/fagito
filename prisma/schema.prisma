@@ -38,6 +38,7 @@ model Groceries {
   imageSrc     String         @default("")
   priceUpdateStatus Int       @default(1) //1-Done, 2 - SQS Sent, 3 - Processing, 0 - fail
   postGroceries PostGroceries[]
+  hasDiscount Boolean @default(false)
 }
 
 model PostGroceries {

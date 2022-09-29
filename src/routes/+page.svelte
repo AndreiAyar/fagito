@@ -2,6 +2,7 @@
 	import type { PageData } from '.svelte-kit/types/src/routes/groceries/$types';
 	import Banner from './components/Banner/Banner.svelte';
 	import LatestProduct from './components/LatestProduct/LatestProduct.svelte';
+	import MostAuthors from './components/MostPostsAuthors/MostAuthors.svelte';
 	import Pagination from './components/Pagination/Pagination.svelte';
 	import RecipeCard from './components/RecipeCard/RecipeCard.svelte';
 	// let currentPage = 1;
@@ -27,8 +28,8 @@
 				viverra.
 			</p>
 			<div class="grid lg:grid-cols-3 gap-4 mx-20">
-				{#if data.response}
-				{#each data.response as post}
+				{#if data.latesPosts}
+				{#each data.latesPosts as post}
 				<RecipeCard  {post} />
 				{/each}
 				{/if}
@@ -51,11 +52,16 @@
 				viverra.
 			</p>
 			<div class="flex gap-14 justify-center flex-wrap ">
-				<LatestProduct hotDiscount />
+				{#if data.latesGroceries}
+				{#each data.latesGroceries as grocery}
+				<LatestProduct {grocery} />
+				{/each}
+				{/if}
+				<!-- <LatestProduct hotDiscount /> -->
+				<!-- <LatestProduct />
 				<LatestProduct />
 				<LatestProduct />
-				<LatestProduct />
-				<LatestProduct />
+				<LatestProduct /> -->
 			</div>
 		</div>
 	</div>
@@ -69,11 +75,18 @@
 				viverra.
 			</p>
 			<div class="flex gap-14 justify-center flex-wrap ">
-				<LatestProduct hotDiscount />
+				{#if data.authorsWithMostPosts}
+				{#each data.authorsWithMostPosts as author}
+			    	<MostAuthors {author}/>
+				{/each}
+				{/if}
+				
+				<!-- <MostAuthors/> -->
+				<!-- <LatestProduct hotDiscount />
 				<LatestProduct />
 				<LatestProduct />
 				<LatestProduct />
-				<LatestProduct />
+				<LatestProduct /> -->
 			</div>
 		</div>
 	</div>

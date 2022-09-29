@@ -37,11 +37,11 @@
 			<button class="btn bg-blue-400 rounded-lg shadow-lg mt-2" type="submit" disabled={loading}
 				>Add your grocery!</button
 			>
-			<!-- {form?.message ?? ''} -->
-			{#if form?.productExists}
-				<p>Product Already exists!</p>
-			{/if}
+		
 		</form>
+		{#if form?.productExists}
+		<p>Product Already exists!</p>
+	{/if}
 	</div>
 	{#if !groceries || !groceries.length}
 		<h2>Nothing here 😊</h2>
@@ -68,6 +68,7 @@
 					vendorId={grocery.vendorId}
 					price={grocery.lastPrice}
 					url={grocery.url}
+					slug={grocery.slug}
 					imageSrc={grocery.imageSrc}
 				/>
 			</div>

@@ -9,7 +9,9 @@
 		<LightSwitch />
 		{#if data.username}
 			<li>
-				<a class="btn inline-block bg-yellow-500 text-white p-2 rounded-md " href="/addPost">{'Manage draft'}</a>
+				<a class="btn inline-block bg-yellow-500 text-white p-2 rounded-md " href="/addPost"
+					>{'Manage draft'}</a
+				>
 			</li>
 		{/if}
 		{#if !data.username}
@@ -17,12 +19,11 @@
 			<li><a href="/register">Register</a></li>
 		{/if}
 		<li>
-			<a href="/posts">Posts</a>
+			<a href="/posts?page=1">Posts</a>
 		</li>
 		<li>
 			<a href="/groceries">Groceries</a>
 		</li>
-	
 	</ul>
 	{#if data.username}
 		<Menu select={false} open={false} origin="tr">

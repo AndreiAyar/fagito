@@ -4,12 +4,12 @@
 	import List from '@editorjs/list';
 	import Embed from '@editorjs/embed';
 	import ImageTool from '@editorjs/image';
-	import edjsParser from 'editorjs-parser';
+ 
 	import Table from '@editorjs/table';
 	import { Upload } from 'upload-js';
 
 	import { onMount } from 'svelte';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import GroceryWidget from '$root/routes/components/GroceryWidget/GroceryWidget.svelte';
 	import type { PageData } from '.svelte-kit/types/src/routes/addPost/[postId]/$types';
 	import { loading, postGroceries } from '$root/store';
@@ -65,9 +65,9 @@
 	let postTitle: string = data.draftContent?.title || '';
 	let uploadedImage = data.draftContent?.imageSrc || null;
 	let uploadingImage = false;
-	let postDescription:string = data.draftContent?.description || null;;
-	let viewEditModal:boolean = false;
-	let errorMessage:string;
+	let postDescription: string = data.draftContent?.description || null;
+	let viewEditModal: boolean = false;
+	let errorMessage: string;
 	const addPost = async () => {
 		loading.set(true);
 		const formData = new FormData();
@@ -89,17 +89,18 @@
 
 	const updatePost = async (saveForLater: boolean) => {
 		loading.set(true);
+		errorMessage=''
 		const formData = new FormData();
 		outputData = await editor.save();
-		if(!outputData || !postTitle || !uploadedImage || !postDescription){
-			errorMessage = 'Please fill all the fields!'
-			loading.set(false)
+		if (!outputData || !postTitle || !uploadedImage || !postDescription) {
+			errorMessage = 'Please fill all the fields!';
+			loading.set(false);
 			return;
 		}
 		const postData = {
 			content: JSON.stringify(outputData),
 			title: postTitle,
-			description:postDescription,
+			description: postDescription,
 			//Be sure to check if postId is of current logged in user
 			postId: data.draftContent.id,
 			isDraft: !!saveForLater,
@@ -151,7 +152,7 @@
 	}
 	const handleClickOutside = () => {
 		viewEditModal = false;
-	}
+	};
 </script>
 
 <div />
@@ -169,31 +170,44 @@
 			bind:value={postTitle}
 		/>
 	</div>
-	<div on:click={()=> viewEditModal = !viewEditModal} class="bg-purple-500 cursor-pointer w-40 text-center mx-auto mb-4 p-2 rounded-lg">
+	<div
+		on:click={() => (viewEditModal = !viewEditModal)}
+		class="bg-purple-500 cursor-pointer w-40 text-center mx-auto mb-4 p-2 rounded-lg"
+	>
 		Content metadata
 	</div>
-	{#if viewEditModal }
-	<div use:clickOutside on:click_outside={handleClickOutside}  class=" z-[100] absolute backdrop-blur-sm w-full h-full m-auto ">
-		<div class="w-[550px] relative m-auto h-auto min-h-[350px] shadow-lg rounded-lg bg-primary-200 dark:bg-purple-500">
-			<div on:click={()=>viewEditModal =!viewEditModal} class="bg-slate-500 cursor-pointer pointer w-10 text-center rounded-lg absolute -top-2 -right-2 font-bold">x</div>
-			{#if uploadingImage} <ProgressRadial  class="w-10 m-auto mb-2" stroke={20} />{/if}
+	{#if viewEditModal}
+		<div
+			use:clickOutside
+			on:click_outside={handleClickOutside}
+			class=" z-[100] absolute backdrop-blur-sm w-full h-full m-auto "
+		>
+			<div
+				class="w-[550px] relative m-auto h-auto min-h-[350px] shadow-lg rounded-lg bg-primary-200 dark:bg-purple-500"
+			>
+				<div
+					on:click={() => (viewEditModal = !viewEditModal)}
+					class="bg-slate-500 cursor-pointer pointer w-10 text-center rounded-lg absolute -top-2 -right-2 font-bold"
+				>
+					x
+				</div>
+				{#if uploadingImage} <ProgressRadial class="w-10 m-auto mb-2" stroke={20} />{/if}
 
-			{#if uploadedImage}
-				<div class="w-[400px] m-auto pb-2 text-center">
-					<h2 class="p-2">Featured image:</h2>
-					<img alt="Featured image" class="object-cover rounded-lg" src={uploadedImage} />
-				</div>{/if}
-		
-			<div class="w-52 m-auto mb-4">
-				<label for="file" class="btn mb-2 bg-blue-300">Upload featured image</label>
-				<input hidden type="file" id="file" on:change={onFileSelected} />
-			
-			</div>
-			<div class="w-[50%] m-auto pb-2">
-				<textarea maxlength="50" type="text" bind:value={postDescription} />
+				{#if uploadedImage}
+					<div class="w-[400px] m-auto pb-2 text-center">
+						<h2 class="p-2">Featured image:</h2>
+						<img alt="Featured image" class="object-cover rounded-lg" src={uploadedImage} />
+					</div>{/if}
+
+				<div class="w-52 m-auto mb-4">
+					<label for="file" class="btn mb-2 bg-blue-300">Upload featured image</label>
+					<input hidden type="file" id="file" on:change={onFileSelected} />
+				</div>
+				<div class="w-[50%] m-auto pb-2">
+					<textarea maxlength="50" type="text" bind:value={postDescription} />
+				</div>
 			</div>
 		</div>
-</div>
 	{/if}
 
 	<div
@@ -211,7 +225,6 @@
 		<div class="pb-4 ">Post control</div>
 		<div class="pb-2 text-red-500">{errorMessage || ''}</div>
 		<div class="flex items-center justify-center gap-10 ">
-	
 			<button
 				class="btn bg-green-400 rounded-lg p-2"
 				disabled={!loading}
@@ -230,7 +243,7 @@
 </section>
 
 <style>
-	:global(.ce-popover, .ce-inline-toolbar ) {
+	:global(.ce-popover, .ce-inline-toolbar) {
 		color: black;
 	}
 	:global(.codex-editor) {

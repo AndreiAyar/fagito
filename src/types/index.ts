@@ -1,4 +1,17 @@
 import type { Prisma } from '@prisma/client';
+export type AdditionalParamPaginatonType = {
+	index:number,
+	name:string,
+	value:number
+}
+export interface GroceriesForPostType {
+	groceryId: number;
+	postId: number;
+	quantity: number;
+	quantityUnit: string;
+	neededQuantity: number;
+	neededQuantityUnit: string;
+}
 
 export type AccountCreationErrorType = {
 	accountCreator: Prisma.UserCreateInput;
@@ -20,5 +33,5 @@ type VendorBrandingSrc = {
 };
 
 export type VendorBrandingType = {
-	[vendorId:number]: VendorBrandingSrc;
+	[vendorId: number]: VendorBrandingSrc;
 };

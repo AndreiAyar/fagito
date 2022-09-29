@@ -10,7 +10,9 @@ declare namespace svelte.JSX {
 declare namespace App {
 	interface Locals {
 		userData: {
+			id:number,
 			username: string;
+			email:string
 		} | null;
 	}
 	interface PageData {

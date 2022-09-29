@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { applyAction } from '$app/forms';
 	import { goto, invalidateAll } from '$app/navigation';
-
+	import food from '$lib/assets/cook.svg';
 	import { validateEmail } from './utils/index';
 
 	import type { Prisma } from '@prisma/client';
@@ -69,7 +69,7 @@
 			await invalidateAll();
 			form.reset();
 			setTimeout(() => {
-				goto('/');
+				goto('/login');
 			}, 3000);
 		}
 
@@ -77,9 +77,12 @@
 	}
 </script>
 
-<section class="flex justify-center">
- 
-	<form method="POST" on:submit|preventDefault={handleSubmit}>
+<section class="container m-auto ">
+	<form
+		method="POST"
+		on:submit|preventDefault={handleSubmit}
+		class="w-[450px] mx-auto mt-[200px] rounded-lg bg-primary-400 shadow-xl dark:bg-purple-500 p-10"
+	>
 		<label for="username">
 			Username:
 			<input
@@ -108,7 +111,6 @@
 			/>
 			<span>{validationErrors.accountCreator.email}</span>
 		</label>
-		Copy
 
 		<label for="password">
 			Password:
@@ -139,31 +141,29 @@
 			/>
 			<span>{validationErrors.accountCreator.repeatPassword}</span>
 		</label>
-		{form?.success ? 'Account Created' : ''}
-		{form?.message || ''}
+		{#if form && form?.success} <p class="bg-green-400 rounded-lg mb-2 p-2 text-center">Account Created</p> {/if}
+		{#if form && form.message} <p class="bg-warning-500 rounded-lg mb-2 p-2">{form.message}</p> {/if}
 		<button class="btn rounded-md 	bg-accent-300 btn-lg text-white">
-			
 			<span>Register</span>
 			<span>🍔 </span></button
 		>
 	</form>
+	<div>
+		<img
+			src={food}
+			alt="Chef"
+			class="absolute top-[70%] z-[-1] left-[30%] -translate-x-[50%] -translate-y-[50%]"
+		/>
+	</div>
 </section>
 
 <style>
-	form {
-		width: 300px;
-		gap: 10px;
-		
- 
-	}
-
 	label {
-		width: 300px;
 		display: flex;
 		flex-direction: column;
 	}
 	label span {
-		color: red;
+		color: rgb(138, 53, 53);
 		font-style: italic;
 	}
 </style>

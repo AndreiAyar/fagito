@@ -20,6 +20,7 @@
 	import Search from './components/Search/Search.svelte';
 
 	export let data: PageData;
+	const date = new Date()
 	$: $loading = !!$navigating;
 </script>
 
@@ -47,5 +48,5 @@
 	</svelte:fragment>
 	<div class="mt-2" />
 	<slot />
-	<svelte:fragment slot="pageFooter">Footer</svelte:fragment>
+	<svelte:fragment slot="pageFooter"><div class="bg-primary-400 p-2 mt-14 text-center text-surface-50 dark:bg-purple-900">&copy; Copyright  {date.getFullYear()}, Fagito</div></svelte:fragment>
 </AppShell>

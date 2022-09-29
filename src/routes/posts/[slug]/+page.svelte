@@ -86,8 +86,11 @@
 			};
 		}}
 	>
+	   <input type="hidden" id="authorId" name="authorId" value={data.postAuthor} />
 		<input type="hidden" id="postId" name="postId" value={data.postId} />
+		{#if data.currentUserAccount === data.postAuthor}
 		<button class="btn bg-blue-300 rounded-lg mt-2" type="submit">Edit post</button>
+		{/if}
 	</form>
 	
 	</div>

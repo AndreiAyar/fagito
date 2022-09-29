@@ -1,7 +1,8 @@
 import prisma from '$root/lib/prisma';
-import { invalid, redirect, type Actions, type Load } from '@sveltejs/kit';
+import { error, invalid, redirect, type Actions, type Load } from '@sveltejs/kit';
 
-export const load: Load = async ({ params }) => {
+export const load: Load = async ({ locals, params }) => {
+	const {id} = locals.userData
 	const slug = params.slug;
 	const post = await prisma.post.findUnique({
 		where: {
@@ -17,7 +18,8 @@ export const load: Load = async ({ params }) => {
 					}
 				}
 			}
-		}
+		},
+
 	});
 	
 	if (!post) return redirect(302, '/');
@@ -37,27 +39,31 @@ export const load: Load = async ({ params }) => {
 	};
 
 	return {
+		currentUserAccount:id,
 		postAuthor: post?.authorId,
 		postId: post?.id,
 		...updatedResponse
 	};
 
-	//throw error(404, 'Not found');
 };
 
 export const actions: Actions = {
 	editPost: async ({ request, locals }) => {
 		if (!locals.userData?.username) return invalid(403, { message: 'try again' });
+		const {id} = locals.userData
 		const formData = request.formData();
 		const postId = (await formData).get('postId') as string;
+		const authorId = (await formData).get('authorId') as string;
+		if(+authorId !== id) throw error(403, 'Forbidden!');
+ 
 		try {
-			const hasAnyDrafts = await prisma.post.findFirst({ where: { isDraft: true } });
+			const hasAnyDrafts = await prisma.post.findFirst({ where: { isDraft: true, authorId:id} });
 			if (hasAnyDrafts) {
 				return { success: false, message: 'Please edit your existing draft first!' };
 			}
 			await prisma.post.updateMany({
 				where: {
-					authorId: 1,
+					authorId:id,
 					id: postId
 				},
 				data: {

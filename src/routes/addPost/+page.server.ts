@@ -1,17 +1,20 @@
+
 import prisma from '../../lib/prisma';
 import { error, invalid, redirect, type Actions } from '@sveltejs/kit';
 import { uuid } from 'uuidv4';
 import { uuidToBase64 } from '../register/utils';
 import type { PageServerLoad } from '.svelte-kit/types/src/routes/$types';
-import fetch from 'node-fetch';
 import { STANDARD_BLOCKS_DATA } from './utils';
-
+import type { GroceriesForPostType } from '$root/types';
+	
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.userData?.username) throw redirect(302, '/');
+	const {id} = locals.userData;
 	try {
 		const response = await prisma.post.findFirst({
 			where: {
-				isDraft: true
+				isDraft: true,
+				authorId:id
 			},
 			include: {
 				postGroceries: {
@@ -49,6 +52,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 export const actions: Actions = {
 	addPost: async ({ request, locals }) => {
 		if (!locals.userData?.username) return invalid(403, { message: 'try again' });
+		const {id} = locals.userData;
 		try {
 			const formData = request.formData();
 			const postData = JSON.parse((await formData).get('postData') as string);
@@ -59,7 +63,7 @@ export const actions: Actions = {
 					data: {
 						id: uuid(),
 						title: postData.title,
-						authorId: 1,
+						authorId: id,
 						slug: `${'draft'}-${base64}`,
 						content: STANDARD_BLOCKS_DATA,
 						isDraft: true
@@ -72,10 +76,10 @@ export const actions: Actions = {
 		}
 	},
 	updatePost: async ({ request, locals }) => {
-		console.log('local', !locals.userData?.username);
+
 		if (!locals.userData?.username) return invalid(403, { message: 'try again' });
+		const {id} = locals.userData;
 		try {
-			console.log('ce ma cum ajung aici');
 			const formData = request.formData();
 			const postData = JSON.parse((await formData).get('postData') as string);
 			const uid = uuid();
@@ -86,10 +90,9 @@ export const actions: Actions = {
 						postId: postData.postId
 					}
 				});
-
-				await prisma.postGroceries.createMany({
+      			await prisma.postGroceries.createMany({
 					data: [
-						...postData.postGroceries.map((el) => ({
+						...postData.postGroceries.map((el):GroceriesForPostType => ({
 							groceryId: +el.id,
 							postId: postData.postId,
 							quantity: el.quantity,
@@ -104,10 +107,7 @@ export const actions: Actions = {
 						postId: postData.postId
 					}
 				});
-			//	console.log('aa', postData.featuredImage);
-		
-				//let ff = await responseFileUpload.json();
-			 
+
 				const normalizedTitle = postData.title.toLowerCase().split(' ').join('-');
 			 
 				const response = await prisma.post.upsert({
@@ -128,7 +128,7 @@ export const actions: Actions = {
 					create: {
 						id: uuid(),
 						title: postData.title,
-						authorId: 1,
+						authorId: id,
 						slug: `${normalizedTitle}-${base64}`,
 						content: JSON.parse(postData?.content as string),
 						postGroceries: {
@@ -142,7 +142,6 @@ export const actions: Actions = {
 				return { success: true, isDraft: response.isDraft, slug: response.slug };
 			}
 		} catch (error) {
-			
 			console.log('err', error);
 			return { success: false, message:'Please fill all the fields!' };
 		}

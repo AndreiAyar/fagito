@@ -1,8 +1,13 @@
 <script lang="ts">
+	import type { AdditionalParamPaginatonType } from "$root/types";
+	import { onMount } from "svelte";
+
+
 	let pagePattern: Array<number | string> = [];
 	export let currentPage: number = 0;
 	export let range: number = 0;
 	export let to: string;
+	export let additionalParam:Array<AdditionalParamPaginatonType> = [];
 
 	$: switch (range > 0) {
 		case range < 7:
@@ -22,37 +27,53 @@
 			currentPage = n;
 		}
 	}
+	let paramConcat;
+	const handleParam = () => {
+		additionalParam.forEach((p:AdditionalParamPaginatonType) => {
+			if (p.value) {
+				paramConcat = '&' + p.name + '=' + p.value;
+			}
+		});
+		return paramConcat
+	};
+	onMount(()=>{
+		handleParam();
+	})
+	$:additionalParam, handleParam();
+	
 </script>
 
-<div class="flex gap-2 items-center justify-center mt-4">
-	<a
-		style="color: blue !important;"
-		class="hover:scale-110"
-		href={currentPage <= 1 ? '' : to + (currentPage - 1)}
-	>
-		<button disabled={currentPage <= 1}> 👈 </button>
-	</a>
-	<div class="flex gap-2 items-center justify-center">
-		{#each pagePattern as pageLabel}
-			<a
-				style="text-decoration: none !important;"
-				class={`p-2 h-10 w-10 text-center shadow-md no-underline bg-primary-300  dark:bg-purple-300 rounded-lg  ${
-					currentPage === pageLabel ? 'bg-yellow-400 dark:bg-yellow-400' : 'text-black'
-				} `}
-				on:click={() => changeNumber(pageLabel)}
-				href={typeof pageLabel === 'number' ? to + pageLabel : ''}
-			>
-				<div class={`cursor-pointer ${currentPage === pageLabel ? 'text-white' : 'text-black'}`}>
-					{pageLabel}
-				</div>
-			</a>
-		{/each}
+{#if range !== 0}
+	<div class="flex gap-2 items-center justify-center mt-4">
+		<a
+			style="color: blue !important;"
+			class="hover:scale-110"
+			href={currentPage <= 1 ? '' : (to + (currentPage - 1)) + (paramConcat || '')}
+		>
+			<button disabled={currentPage <= 1}> 👈 </button>
+		</a>
+		<div class="flex gap-2 items-center justify-center">
+			{#each pagePattern as pageLabel}
+				<a
+					style="text-decoration: none !important;"
+					class={`p-2 h-10 w-10 text-center shadow-md no-underline bg-primary-300  dark:bg-purple-300 rounded-lg  ${
+						currentPage === pageLabel ? 'bg-yellow-400 dark:bg-yellow-400' : 'text-black'
+					} `}
+					on:click={() => changeNumber(pageLabel)}
+					href={typeof pageLabel === 'number' ? (to + pageLabel + (paramConcat || '')) : ''}
+				>
+					<div class={`cursor-pointer ${currentPage === pageLabel ? 'text-white' : 'text-black'}`}>
+						{pageLabel}
+					</div>
+				</a>
+			{/each}
+		</div>
+		<a
+			class="hover:scale-110"
+			style="color: blue !important;"
+			href={currentPage >= range ? '' : to + (currentPage + 1) + (paramConcat || '')}
+		>
+			<button disabled={currentPage >= range}> 👉 </button>
+		</a>
 	</div>
-	<a
-		class="hover:scale-110"
-		style="color: blue !important;"
-		href={currentPage >= range ? '' : to + (currentPage + 1)}
-	>
-		<button disabled={currentPage >= range}> 👉 </button>
-	</a>
-</div>
+{/if}

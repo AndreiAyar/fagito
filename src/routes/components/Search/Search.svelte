@@ -10,7 +10,7 @@
  
 	const searchResultType: { [key: string]: string } = {
 		['post']: 'posts',
-		['grocery']: 'product'
+		['grocery']: 'grocery'
 	};
 	const debounce = (cb: Function) => {
 		clearTimeout(timer);
@@ -78,7 +78,7 @@
 				<div class="flex hover:bg-primary-200 dark:hover:bg-purple-800" on:click={()=>handleOnClick(searchResult)}>
 					<a
 						class="flex items-center p-2 gap-2"
-						href={onClick ? "":`${searchResultType[searchResult.table_name]}/${searchResult.slug}`}
+						href={onClick ? "":`/${searchResultType[searchResult.table_name]}/${searchResult.slug}`}
 					>
 						<img class="w-10 rounded-md" src={searchResult.imageSrc} alt={searchResult.title} />
 						<p class="text-left">

@@ -1,17 +1,23 @@
 <script lang="ts">
 	import type { Action, PageData } from './$types';
-	import { enhance } from '$app/forms'
+	import { enhance } from '$app/forms';
+	import chef from '$lib/assets/chef.svg';
 	export let form: Action;
-	export let data:PageData
+	export let data: PageData;
 </script>
 
-<section>
-	<div>Please login</div>
-	{#if data && data?.user }
-		Welcome { data?.user }
+<section class="container m-auto flex">
+	{#if data && data?.user}
+		Welcome {data?.user}
 	{/if}
-	<form method="POST"  use:enhance>
-		<label for="email">
+
+	<form
+		method="POST"
+		class="w-[450px] mx-auto mt-[250px] rounded-lg bg-primary-400 shadow-xl dark:bg-purple-500 p-10"
+		use:enhance
+	>
+		<label for="email" class="pt-10">
+			Email:
 			<input
 				id="email"
 				aria-label="Enter your email"
@@ -21,7 +27,8 @@
 				value={form?.email ?? ''}
 			/>
 		</label>
-		<label for="passsword">
+		<label for="passsword" class="pt-5">
+			Password:
 			<input
 				id="password"
 				aria-label="Enter your password"
@@ -30,12 +37,20 @@
 				type="password"
 			/>
 		</label>
-		<p>{form?.message ?? ''}</p>
+		{#if form && form.message} <p class="bg-warning-500 rounded-b-lg p-2">{form.message}</p> {/if}
+
 		{#if form?.success}
 			<!-- this message is ephemeral; it exists because the page was rendered in
        response to a form submission. it will vanish if the user reloads -->
 			<p>Successfully logged in!</p>
 		{/if}
-		<button type="submit">Log in</button>
+		<button class="btn mt-2 bg-blue-300 rounded-lg" type="submit">Log in</button>
 	</form>
+	<div>
+		<img
+			src={chef}
+			alt="Chef"
+			class="absolute top-[50%] z-[-1] left-[50%] -translate-x-[50%] -translate-y-[50%]"
+		/>
+	</div>
 </section>
