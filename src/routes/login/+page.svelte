@@ -3,14 +3,9 @@
 	import { enhance } from '$app/forms';
 	import chef from '$lib/assets/chef.svg';
 	export let form: Action;
-	export let data: PageData;
 </script>
 
 <section class="container m-auto flex">
-	{#if data && data?.user}
-		Welcome {data?.user}
-	{/if}
-
 	<form
 		method="POST"
 		class="w-[450px] mx-auto mt-[250px] rounded-lg bg-primary-400 shadow-xl dark:bg-purple-500 p-10"

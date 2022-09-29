@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { neededGroceriesList, checkedGroceriesFromList } from '$root/store';
 	export let postId: string;
-	//const dataaa = []
-	const onGrocerySelect = (id) => {
+	const onGrocerySelect = (id: number) => {
+		// @ts-ignore: Unreachable code error
 		const idx = $checkedGroceriesFromList.findIndex((el) => el.id === id && el.postId === postId);
-		//acc = [...$checkedGroceriesFromList]
 		if (idx === -1) {
+			// @ts-ignore: Unreachable code error
 			$checkedGroceriesFromList = [...$checkedGroceriesFromList, { id, postId }];
 		}
 		if (idx !== -1) {
@@ -21,6 +21,7 @@
 	const isChecked = (id) => {
 		if ($checkedGroceriesFromList) {
 			return (
+				// @ts-ignore: Unreachable code error
 				$checkedGroceriesFromList.findIndex((el) => el.id === id && el.postId === postId) !== -1
 			);
 		}
@@ -60,7 +61,7 @@
 					<p class="bg-blue-400 top-8 left-16 px-[5px] rounded-lg">
 						Portion:{calculatePrice(
 							postGrocery.neededQuantity,
-							postGrocery.grocery.lastPrice,
+							postGrocery.grocery.lastPrice || 1,
 							postGrocery.quantity
 						)} RON
 					</p>

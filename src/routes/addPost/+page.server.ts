@@ -1,20 +1,18 @@
-
 import prisma from '../../lib/prisma';
 import { error, invalid, redirect, type Actions } from '@sveltejs/kit';
 import { uuid } from 'uuidv4';
 import { uuidToBase64 } from '../register/utils';
 import type { PageServerLoad } from '.svelte-kit/types/src/routes/$types';
 import { STANDARD_BLOCKS_DATA } from './utils';
-import type { GroceriesForPostType } from '$root/types';
-	
+ 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.userData?.username) throw redirect(302, '/');
-	const {id} = locals.userData;
+	const { id } = locals.userData;
 	try {
 		const response = await prisma.post.findFirst({
 			where: {
 				isDraft: true,
-				authorId:id
+				authorId: id
 			},
 			include: {
 				postGroceries: {
@@ -36,11 +34,13 @@ export const load: PageServerLoad = async ({ locals }) => {
 			];
 			const updatedResponse = {
 				...response,
-				totalPrice:response.postGroceries.reduce((acc, el) => {
+				totalPrice: response.postGroceries.reduce((acc, el) => {
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+					// @ts-ignore: Unreachable code error
 					return +((el.neededQuantity * el.lastPrice) / el.quantity).toFixed(2) + acc;
 				}, 0)
-			}
-	 
+			};
+
 			return { draftContent: updatedResponse };
 		}
 	} catch (err) {
@@ -52,7 +52,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 export const actions: Actions = {
 	addPost: async ({ request, locals }) => {
 		if (!locals.userData?.username) return invalid(403, { message: 'try again' });
-		const {id} = locals.userData;
+		const { id } = locals.userData;
 		try {
 			const formData = request.formData();
 			const postData = JSON.parse((await formData).get('postData') as string);
@@ -76,9 +76,8 @@ export const actions: Actions = {
 		}
 	},
 	updatePost: async ({ request, locals }) => {
-
 		if (!locals.userData?.username) return invalid(403, { message: 'try again' });
-		const {id} = locals.userData;
+		const { id } = locals.userData;
 		try {
 			const formData = request.formData();
 			const postData = JSON.parse((await formData).get('postData') as string);
@@ -90,16 +89,18 @@ export const actions: Actions = {
 						postId: postData.postId
 					}
 				});
-      			await prisma.postGroceries.createMany({
+				await prisma.postGroceries.createMany({
 					data: [
-						...postData.postGroceries.map((el):GroceriesForPostType => ({
-							groceryId: +el.id,
-							postId: postData.postId,
-							quantity: el.quantity,
-							quantityUnit: el.quantityUnit,
-							neededQuantity: el.neededQuantity,
-							neededQuantityUnit: el.neededQuantityUnit
-						}))
+						...postData.postGroceries.map(
+							(el) => ({
+								groceryId: +el.id,
+								postId: postData.postId,
+								quantity: el.quantity,
+								quantityUnit: el.quantityUnit,
+								neededQuantity: el.neededQuantity,
+								neededQuantityUnit: el.neededQuantityUnit
+							})
+						)
 					]
 				});
 				const postGroceriesResponse = await prisma.postGroceries.findMany({
@@ -109,7 +110,7 @@ export const actions: Actions = {
 				});
 
 				const normalizedTitle = postData.title.toLowerCase().split(' ').join('-');
-			 
+
 				const response = await prisma.post.upsert({
 					where: {
 						id: postData.postId
@@ -122,8 +123,8 @@ export const actions: Actions = {
 							connect: [...postGroceriesResponse.map((el) => ({ id: el.id }))]
 						},
 						isDraft: postData.isDraft,
-						imageSrc:postData.uploadedImage,
-						description:postData.description
+						imageSrc: postData.uploadedImage,
+						description: postData.description
 					},
 					create: {
 						id: uuid(),
@@ -135,15 +136,15 @@ export const actions: Actions = {
 							connect: [...postGroceriesResponse.map((el) => ({ id: el.id }))]
 						},
 						isDraft: postData.isDraft,
-						imageSrc:postData.uploadedImage,
-						description:postData.description
+						imageSrc: postData.uploadedImage,
+						description: postData.description
 					}
 				});
 				return { success: true, isDraft: response.isDraft, slug: response.slug };
 			}
 		} catch (error) {
 			console.log('err', error);
-			return { success: false, message:'Please fill all the fields!' };
+			return { success: false, message: 'Please fill all the fields!' };
 		}
 	}
 };

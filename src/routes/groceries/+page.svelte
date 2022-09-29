@@ -7,12 +7,13 @@
 	import GroceryCard from '../components/GroceryCard/GroceryCard.svelte';
 	import Pagination from '../components/Pagination/Pagination.svelte';
 	import { page } from '$app/stores';
-	export let data: PageData;
+	import type { GroceryType } from '$root/types';
+	export let data: GroceryType;
 	let loading = false;
 	export let form: Action;
 	$: groceries = data.groceries;
 	$: totalPages = data.totalPages;
-	$: currentPage = $page.url.searchParams.get('page') as number;
+	$: currentPage = $page.url.searchParams.get('page') as any;
 </script>
 
 <section class="container m-auto text-center">
@@ -60,7 +61,7 @@
 			</div>
 		{/if}
 
-		{#each groceries as grocery (grocery.id + '' + grocery.updatedAt)}
+		{#each groceries as grocery (grocery.id + '' + grocery.title)}
 			<div class="w-[20%] min-w-[256px]" in:fade={{ duration: 500 }}>
 				<GroceryCard
 					title={grocery.title}

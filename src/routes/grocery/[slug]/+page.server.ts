@@ -5,7 +5,6 @@ export const load: Load = async ({ params }) => {
 	const slug = params.slug;
 	if (slug && slug.length) {
 		const querySlug = new URLSearchParams(slug).toString();
-		console.log('q',querySlug)
 		try {
 			const product = await prisma.groceries.findFirst({
 				where: {

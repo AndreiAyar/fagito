@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { Avatar, Divider } from '@brainandbones/skeleton';
+	import { vendorBranding } from '$root/routes/components/GroceryCard/utils';
 	import '@brainandbones/skeleton/styles/elements/cards.css';
-	import { vendorBranding } from './utils';
 	export let imageSrc: string;
 	export let price: number;
 	export let title: string;

@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import type { PostType } from '$root/types';
 	import { ListBox, ListBoxItem } from '@brainandbones/skeleton';
 	import { writable, type Writable } from 'svelte/store';
 	import Pagination from '../components/Pagination/Pagination.svelte';
 	import RecipeCard from '../components/RecipeCard/RecipeCard.svelte';
 	import type { PageData } from './$types';
-	export let data: PageData;
-	$: currentPage = $page.url.searchParams.get('page') as number;
-	$: currentAuthor = $page.url.searchParams.get('author') as number;
+	interface PostsType extends PageData {
+		posts:PostType[]
+	}
+	export let data: PostsType;
+	$: currentPage = $page.url.searchParams.get('page') as any;
+	$: currentAuthor = $page.url.searchParams.get('author') as any;
 	$: console.log('total',currentAuthor, data.totalPages);
 	let filterHidden:boolean = true;
 	const storeSingleAutohr: Writable<number> = writable(-1);
@@ -48,7 +52,6 @@
 		{#if data && data.posts}
 			{#each data.posts as post}
 				<RecipeCard {post} />
-				<!-- <a href={`/posts/${post.slug}`}>{post.title}</a> -->
 			{/each}
 		{/if}
 	</div>

@@ -1,6 +1,8 @@
 <script lang="ts">
-	export let author;
-	//$: hotDiscoutnClass = grocery.hasDiscount ? 'bg-gradient-to-r from-pink-500 to-yellow-500' : '';
+	import type { Prisma } from "@prisma/client";
+
+
+	export let author:Prisma.UserCreateManyInput;
 </script>
 <!--   -->
 <a href={`/posts?page=1&author=${author.id}`} > 
@@ -15,9 +17,8 @@
 				<img
 					class="w-28 rounded-full  object-contain"
 					alt="Food"
-					src={`https://i.pravatar.cc/${250*author.id}`}
+					src={`https://i.pravatar.cc/${250*(author.id || 1)}`}
 				/>
-				<!-- {#if hotDiscoutnClass} <div class="absolute bottom-0 -right-5">🔥</div>{/if} -->
 			</div>
 		</div>
 

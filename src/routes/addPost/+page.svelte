@@ -11,11 +11,11 @@
 	import { onMount } from 'svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import GroceryWidget from '$root/routes/components/GroceryWidget/GroceryWidget.svelte';
-	import type { PageData } from '.svelte-kit/types/src/routes/addPost/[postId]/$types';
 	import { loading, postGroceries } from '$root/store';
 	import { STANDARD_BLOCKS_DATA } from './utils';
 	import { ProgressRadial } from '@brainandbones/skeleton';
 	import { clickOutside } from '$root/lib/clickOutside';
+	import type { PostsWithGroceries } from '$root/types';
 
 	const editor = new EditorJS({
 		holder: 'editorjs',
@@ -60,12 +60,12 @@
 		}
 	});
 
-	export let data: PageData;
+	export let data: PostsWithGroceries;
 	let outputData: OutputData;
 	let postTitle: string = data.draftContent?.title || '';
 	let uploadedImage = data.draftContent?.imageSrc || null;
 	let uploadingImage = false;
-	let postDescription: string = data.draftContent?.description || null;
+	let postDescription: string = data.draftContent?.description;
 	let viewEditModal: boolean = false;
 	let errorMessage: string;
 	const addPost = async () => {
@@ -136,7 +136,8 @@
 		if (!data.draftContent) {
 			await addPost();
 		}
-		if (data && data.draftContent && data.draftContent.postGroceries) {
+		if (data && data.draftContent && data.draftContent.postGroceries ) {
+			// @ts-ignore: Unreachable code error
 			$postGroceries = data.draftContent.postGroceries;
 		}
 
@@ -196,6 +197,7 @@
 				{#if uploadedImage}
 					<div class="w-[400px] m-auto pb-2 text-center">
 						<h2 class="p-2">Featured image:</h2>
+						<!-- svelte-ignore a11y-img-redundant-alt -->
 						<img alt="Featured image" class="object-cover rounded-lg" src={uploadedImage} />
 					</div>{/if}
 

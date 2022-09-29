@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { clickOutside } from '$root/lib/clickOutside';
-	let searchData: Array<{}>;
+	import type { SearchResult } from '$root/types';
+	let searchData: SearchResult[];
 	let searchValue: string;
 	let controller: AbortController;
 	let hideSearch: boolean = false;

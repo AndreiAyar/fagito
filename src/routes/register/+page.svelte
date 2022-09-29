@@ -104,7 +104,7 @@
 				required
 				id="email"
 				aria-label="Email"
-				placeholder="Please ender an email"
+				placeholder="Please enter an email"
 				type="email"
 				name="email"
 				bind:value={accInputs.email}

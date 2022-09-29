@@ -2,7 +2,10 @@ import prisma from '$root/lib/prisma';
 import { error, invalid, redirect, type Actions, type Load } from '@sveltejs/kit';
 
 export const load: Load = async ({ locals, params }) => {
-	const {id} = locals.userData
+	let id:number;
+	if(locals.userData){
+		id = locals.userData.id
+	}
 	const slug = params.slug;
 	const post = await prisma.post.findUnique({
 		where: {
@@ -49,7 +52,7 @@ export const load: Load = async ({ locals, params }) => {
 
 export const actions: Actions = {
 	editPost: async ({ request, locals }) => {
-		if (!locals.userData?.username) return invalid(403, { message: 'try again' });
+		if (!locals.userData?.username) return invalid(403, { message: 'Access denied.' });
 		const {id} = locals.userData
 		const formData = request.formData();
 		const postId = (await formData).get('postId') as string;

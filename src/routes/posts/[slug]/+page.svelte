@@ -1,10 +1,11 @@
 <script lang="ts">
+	// @ts-nocheck
 	import { applyAction, enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { vendorBranding } from '$root/routes/components/GroceryCard/utils';
 	import { neededGroceriesList } from '$root/store';
-	import type { PageData } from '.svelte-kit/types/src/routes/posts/$types';
-	export let data: PageData;
+	import type { GroceriesAddPostType } from '$root/types';
+	export let data: GroceriesAddPostType;
 	import edjsParser from 'editorjs-parser';
 	import { onMount } from 'svelte';
 	import ProductsNeeded from '../components/ProductsNeeded.svelte';
@@ -88,7 +89,7 @@
 	>
 	   <input type="hidden" id="authorId" name="authorId" value={data.postAuthor} />
 		<input type="hidden" id="postId" name="postId" value={data.postId} />
-		{#if data.currentUserAccount === data.postAuthor}
+		{#if data.currentUserAccount && data.currentUserAccount === data.postAuthor}
 		<button class="btn bg-blue-300 rounded-lg mt-2" type="submit">Edit post</button>
 		{/if}
 	</form>
@@ -142,3 +143,9 @@
 		width: 100%;
 	} */
 </style>
+
+
+
+
+
+

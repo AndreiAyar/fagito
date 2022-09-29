@@ -7,14 +7,10 @@
 	export let title: string;
 	export let url: string;
 	export let vendorTitle: string;
-	export let slug:string;
+	export let slug: string;
 	export let vendorId: number;
 </script>
 
-<!-- slotHeader="-mt-4 -mx-4"
-slotBody="space-y-4"
-slotFooter="flex justify-start items-center space-x-4"
-class="cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-xl overflow-hidden" -->
 <a href={`/grocery/${slug}`}>
 	<div>
 		<div
@@ -34,7 +30,7 @@ class="cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-xl 
 			</header>
 			<div class=" flex flex-col">
 				<div class="card-body mt-2">{title}</div>
-	
+
 				<div class="absolute bottom-3 left-4 font-bold">
 					{price.toFixed(2)} Lei
 				</div>
@@ -44,5 +40,4 @@ class="cursor-pointer transition-transform hover:-translate-y-1 hover:shadow-xl 
 			</div>
 		</div>
 	</div>
-	
 </a>

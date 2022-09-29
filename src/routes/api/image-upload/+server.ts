@@ -1,15 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { error, type RequestHandler } from '@sveltejs/kit';
-import AWS from 'aws-sdk';
-import * as fs from 'fs';
-const s3 = new AWS.S3({
-	accessKeyId: 'AKIA3NSCJNVZENGPNEPN',
-	secretAccessKey: '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'
-});
 export const POST: RequestHandler = async ({ request, locals }) => {
 	if (!locals.userData) {
 		throw error(403, 'Forbidden!');
 	}
-
 	try {
 		const formData = await request.formData();
 		const file = formData.get('image') as File;
@@ -21,6 +15,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		const response = await fetch('https://api.upload.io/v1/files/basic', {
 			method: 'POST',
 			headers: myHeaders,
+			// @ts-expect-error
 			body: stream,
 			redirect: 'follow'
 		});
@@ -28,6 +23,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 		return new Response(JSON.stringify({ success: 1, file: { url: data.fileUrl } }));
 	} catch (error) {
-		console.log('err from image', error);
+		return new Response(JSON.stringify(error));
 	}
+	
 };

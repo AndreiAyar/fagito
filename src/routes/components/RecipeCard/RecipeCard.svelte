@@ -1,13 +1,20 @@
 <script lang="ts">
+	import type { PostType } from '$root/types';
 	import { Avatar } from '@brainandbones/skeleton';
 	import '@brainandbones/skeleton/styles/elements/cards.css';
-	export let post;
+	export let post:PostType;
+	const calculatePrice = (neededQuantity: number, itemPrice: number, quantity: number) => {
+		const finalPrice: number = +((neededQuantity * itemPrice) / quantity).toFixed(2);
+		if (isNaN(finalPrice)) return 0;
+		return finalPrice;
+	};
 </script>
 
 <a href={`/posts/${post.slug}`} style="text-decoration:none !important" class="text-white">
 	<div
 		class="card cursor-pointer h-[440px] transition-transform hover:-translate-y-1  shadow-[5px_5px] shadow-primary-300 dark:shadow-purple-900 hover:shadow-[5px_5px] hover:dark:shadow-purple-400 hover:shadow-primary-400 overflow-hidden"
 	>
+
 		<header class="relative">
 			<div
 				class="bg-gray-100 rounded-3xl font-semibold min-w-[145px] justify-center h-12 p-2.5 flex   gap-2 items-center absolute -bottom-4 right-2"
@@ -28,5 +35,8 @@
 		<footer class="card-footer flex">
 			{post.description}
 		</footer>
+		{#if post && post.isDraft}
+		<div class="absolute ml-2 bg-yellow-500 p-1 rounded-lg">Draft</div>
+		{/if}
 	</div>
 </a>

@@ -32,7 +32,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, locals }) => {
+	default: async ({ request }) => {
 		const formData = request.formData();
 		const url = (await formData).get('url') as string;
 		const urlAlreadyExists = await prisma.groceries.findFirst({

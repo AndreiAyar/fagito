@@ -4,7 +4,7 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	let searchValue: string;
-	let searchIn:string;
+	let searchIn: string;
 </script>
 
 <div
@@ -15,25 +15,18 @@
 		class="w-[30%] z-[1] min-w-[300px] transform scale-x-[-1] object-contain absolute -left-[20%] lg:left-[1%] -bottom-0 mt-auto "
 		src={chef}
 	/>
-	<!-- 
-	<img
-		alt="What to eat ? "
-		class="w-[600px] object-contain absolute left-[50] -bottom-1 mt-auto "
-		src={kitchen}
-	/> -->
-
 	<form
-	method="GET"
-	use:enhance={({ cancel }) => {
-		const searchTerm = searchValue.split('/').join(' ')
-		cancel();
-		goto(`/search/${searchTerm}/cat/${searchIn}`)
-	  }}
+		method="GET"
+		use:enhance={({ cancel }) => {
+			const searchTerm = searchValue.split('/').join(' ');
+			cancel();
+			goto(`/search/${searchTerm}/cat/${searchIn}`);
+		}}
 		class="w-[50%] z-10 min-w-[450px] mx-auto mb-auto mt-20 h-10 flex gap-[1px] bg-primary-300 dark:bg-purple-900 dark:hover:bg-purple-400 hover:bg-primary-400 shadow-[5px_5px] shadow-primary-300 dark:shadow-purple-900 hover:shadow-[5px_5px] hover:dark:shadow-purple-400 hover:shadow-primary-400"
 	>
 		<div class="w-[60%]">
 			<input
-		     	required
+				required
 				name="searchValue"
 				type="text"
 				bind:value={searchValue}
@@ -59,7 +52,6 @@
 </div>
 
 <style>
-	/* input{background-color: transparent!important;} */
 	input,
 	select {
 		border-radius: 0;

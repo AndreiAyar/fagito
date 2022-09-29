@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from '.svelte-kit/types/src/routes/$types';
-	import { Avatar, filter, Menu, Apollo, LightSwitch } from '@brainandbones/skeleton';
+	import { Avatar, filter, Menu, LightSwitch } from '@brainandbones/skeleton';
 	export let data: PageData;
 </script>
 
@@ -37,7 +37,7 @@
 			<div slot="content" class="card w-[200px] shadow-xl overflow-hidden">
 				<nav class="list-nav">
 					<ul>
-						<li><a href={'/'}>Account</a></li>
+						<li><a href={'/account'}>Account</a></li>
 						<hr />
 						<li><a href={'/logout'}>Log Out</a></li>
 					</ul>

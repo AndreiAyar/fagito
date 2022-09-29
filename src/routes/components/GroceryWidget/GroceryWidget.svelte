@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { postGroceries } from '$root/store';
-	import { Tooltip } from '@brainandbones/skeleton';
 	import { fly } from 'svelte/transition';
 	import Search from '../Search/Search.svelte';
 
@@ -29,7 +28,7 @@
 		];
 	};
 	$: totalPrice = $postGroceries.reduce((acc, el) => {
-		const price =  +((el.neededQuantity * el.lastPrice) / el.quantity).toFixed(2)
+		const price =  +((el.neededQuantity * (el.lastPrice ? el.lastPrice : 1)) / el.quantity).toFixed(2)
 		return (isNaN(price) ? 0 : price)  + acc;
 	}, 0);
 </script>
@@ -113,7 +112,7 @@
 						</td>
 						<td class="text-center ">
 							<div class="font-semibold text-sm bg-green-400 p-1 rounded-lg mx-2 text-center">
-								{calculatePrice(item.neededQuantity, item.lastPrice, item.quantity)} RON
+								{calculatePrice(item.neededQuantity, (item.lastPrice ? item.lastPrice : 1), item.quantity)} RON
 							</div>
 						</td>
 					</tr>
@@ -129,9 +128,6 @@
 
 			<Search table={'products'} onClick={addGrocery} />
 			<p>Total Price: {totalPrice?.toFixed(2) || 0} RON</p>
-			<!-- <div class="btn bg-blue-400 mx-2">
-				Add grocery
-			</div> -->
 		</div>
 	</div>
 </div>

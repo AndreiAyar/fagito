@@ -104,8 +104,5 @@
 		/>
 	</div>
 	<GroceryWidget />
-	<!-- {#if parsedData}
-		{@html parsedData}
-	{/if} -->
 	<button on:click={addPost}>AddPost</button>
 </section>

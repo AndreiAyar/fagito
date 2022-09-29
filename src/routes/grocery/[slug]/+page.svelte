@@ -1,10 +1,17 @@
 <script lang="ts">
-	import type { PageData } from '../../../../.svelte-kit/types/src/routes/product/[slug]/$types';
+	import type { PageData } from './$types';
 	import * as d3 from 'd3';
-	import moment from 'moment';
-	import { onMount, onDestroy } from 'svelte';
-
-	export let data: PageData;
+	import { onMount } from 'svelte';
+	interface Da extends PageData {
+		priceHistory:Array<{}>,
+		product:{
+			title:string,
+			imageSrc:string,
+			url:string,
+			lastPrice:number
+		}
+	}
+	export let data: Da;
 	$: d3Data = data.priceHistory;
 	let el:HTMLElement;
 
