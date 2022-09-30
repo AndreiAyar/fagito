@@ -21,7 +21,7 @@
 name: deploy website
 on:
   push:
-    branches: [master]
+    branches: [development]
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
