@@ -31,14 +31,14 @@
 		>
 			<img
 				src="https://cdn.dribbble.com/users/160117/screenshots/3197970/media/1f5c05158cafb49ecca277b87cedcae0.gif"
-				alt="Loading!"
+				alt="Loading!!!"
 			/>
 		</div>
 	{/if}
 	<svelte:fragment slot="header">
 		<AppBar padding="px-7 py-2">
 			<svelte:fragment slot="lead"
-				><a href="/"><img class="w-36" alt="Fagito branding" src={logo} /></a></svelte:fragment
+				><a href="/"><img class="w-36" alt="Fagito branding :)" src={logo} /></a></svelte:fragment
 			>
 			<Search/>
 			<svelte:fragment slot="trail">
