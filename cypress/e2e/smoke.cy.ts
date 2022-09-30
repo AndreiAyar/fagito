@@ -1,6 +1,6 @@
 describe('Homepage load', () => {
 	it('Visits', () => {
-		cy.visit('http://127.0.0.1:5173/');
+		cy.visit('http://127.0.0.1:4173/');
 	});
 
 	it('Should have Latest Recipes category', () => {
@@ -14,7 +14,7 @@ describe('Homepage load', () => {
 
 describe('Login page', () => {
 	it('Visits', () => {
-		cy.visit('http://127.0.0.1:5173/login');
+		cy.visit('http://127.0.0.1:4173//login');
 	});
 	it('Should login with default user', () => {
 		cy.wait(500);
