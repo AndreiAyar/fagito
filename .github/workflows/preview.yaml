@@ -1,7 +1,7 @@
 name: Deploy Preview CI
 on:
   push:
-    branches: [ development ]
+    branches: [development]
 jobs:
   deploy:
     runs-on: ubuntu-latest
