@@ -1,6 +1,6 @@
 describe('Homepage load', () => {
   it('Visits', () => {
-    cy.visit('http://127.0.0.1:5173/')
+    cy.visit('http://127.0.0.1:4173/')
   })
 
   it('Should have Latest Recipes category', () => {
