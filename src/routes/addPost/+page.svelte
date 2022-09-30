@@ -42,7 +42,7 @@
 				class: ImageTool,
 				config: {
 					endpoints: {
-						byFile: 'http://127.0.0.1:5173/api/image-upload' // Your backend file uploader endpoint
+						byFile: '/api/image-upload' // Your backend file uploader endpoint
 					},
 					additionalRequestHeaders: {
 						Authorization: 'Bearer public_FW25av7a1N6cPLgUdHdUEZuikXZw'

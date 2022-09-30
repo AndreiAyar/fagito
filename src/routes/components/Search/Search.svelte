@@ -37,7 +37,7 @@
 			if(table){
 				data.append('searchTable',table)
 			}
-			const response = await fetch('https://fagito.vercel.app/api/search', {
+			const response = await fetch('/api/search', {
 				method: 'POST',
 				body: data,
 				signal: controller.signal
