@@ -2,7 +2,7 @@
 	import { AppShell, AppBar } from '@brainandbones/skeleton';
 	import '../theme.postcss'; // <--
 	import '../app.postcss';
-	import '@brainandbones/skeleton/styles/all.css'; // <--
+	import '@brainandbones/skeleton/styles/all.css';  
 
 	import '@brainandbones/skeleton/styles/elements/buttons.css';
 	import '@brainandbones/skeleton/styles/forms.css';
