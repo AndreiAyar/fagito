@@ -28,7 +28,7 @@
 				labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo
 				viverra.
 			</p>
-			<div class="grid lg:grid-cols-3 gap-4 mx-20">
+			<div id="recepies-grid" class="grid lg:grid-cols-3 gap-4 mx-20">
 				{#if data.latesPosts}
 					{#each data.latesPosts as post}
 						<RecipeCard {post} />
