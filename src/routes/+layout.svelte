@@ -38,7 +38,7 @@
 	<svelte:fragment slot="header">
 		<AppBar padding="px-7 py-2">
 			<svelte:fragment slot="lead"
-				><a href="/"><img class="w-36" alt="Fagito branding" src={logo} /></a></svelte:fragment
+				><a href="/"><img class="w-36" alt="Fagito branding :)" src={logo} /></a></svelte:fragment
 			>
 			<Search/>
 			<svelte:fragment slot="trail">
