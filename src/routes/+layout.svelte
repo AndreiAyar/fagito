@@ -48,5 +48,5 @@
 	</svelte:fragment>
 	<div class="mt-2" />
 	<slot />
-	<svelte:fragment slot="pageFooter"><div class="bg-primary-400 p-2 mt-14 text-center text-surface-50 dark:bg-purple-900">&copy; Copyright ONLY! DEV {date.getFullYear()}, Fagito</div></svelte:fragment>
+	<svelte:fragment slot="pageFooter"><div class="bg-primary-400 p-2 mt-14 text-center text-surface-50 dark:bg-purple-900">&copy; Copyright ONLY! DEV {date.getFullYear()}, F!!!agito</div></svelte:fragment>
 </AppShell>
