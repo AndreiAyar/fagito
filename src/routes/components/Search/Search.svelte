@@ -41,7 +41,7 @@
 				method: 'POST',
 				body: data,
 				signal: controller.signal
-			});//TEST
+			});
 			let result = await response.json();
  
 			if (result && result.foundEntries.length) {
