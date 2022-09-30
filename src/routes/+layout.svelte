@@ -22,8 +22,6 @@
 	export let data: PageData;
 	const date = new Date()
 	$: $loading = !!$navigating;
-	import { PUBLIC_API_KEY } from '$env/static/public'
-	console.log(PUBLIC_API_KEY) // public
 </script>
 
 <AppShell>
