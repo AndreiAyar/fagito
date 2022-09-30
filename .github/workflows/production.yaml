@@ -11,8 +11,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
+      - name: Setup npm package
+        run: npm init -y && npm install
+      - name: Setup node 16
+        uses: actions/setup-node@v3.5.0
+        with:
+          node-version: 16.x
       - name: Cypress run
         uses: cypress-io/github-action@v4.2.0 # use the explicit version number
         with:
