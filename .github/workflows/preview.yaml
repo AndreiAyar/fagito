@@ -19,7 +19,7 @@
 #           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
 #           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 name: deploy website
-on: [pull_request]
+on: [master]
 jobs:
   deploy:
     runs-on: ubuntu-latest
