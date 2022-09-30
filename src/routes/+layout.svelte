@@ -49,7 +49,7 @@
 	<slot />
 	<svelte:fragment slot="pageFooter"
 		><div class="bg-primary-400 p-2 mt-14 text-center text-surface-50 dark:bg-purple-900">
-			&copy; Copyright ONLY! DEV {date.getFullYear()}, Fagito
+			&copy; Copyright {date.getFullYear()}, Fagito
 		</div></svelte:fragment
 	>
 </AppShell>
