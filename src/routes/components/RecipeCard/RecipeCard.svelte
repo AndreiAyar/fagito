@@ -3,11 +3,7 @@
 	import { Avatar } from '@brainandbones/skeleton';
 	import '@brainandbones/skeleton/styles/elements/cards.css';
 	export let post:PostType;
-	const calculatePrice = (neededQuantity: number, itemPrice: number, quantity: number) => {
-		const finalPrice: number = +((neededQuantity * itemPrice) / quantity).toFixed(2);
-		if (isNaN(finalPrice)) return 0;
-		return finalPrice;
-	};
+	import chef from '$lib/assets/chef.svg';
 </script>
 
 <a href={`/posts/${post.slug}`} style="text-decoration:none !important" class="text-white">
@@ -28,7 +24,7 @@
 				/>
 				<div class="text-gray-900 text-center">{post.author.username}</div>
 			</div>
-			<img alt="Header" class="w-full h-[300px] object-cover" src={post.imageSrc} />
+			<img alt="Header" class="w-full h-[300px] object-cover" src={post.imageSrc || chef} />
 		</header>
 		<div class="card-body mt-2 font-bold capitalize text-left">{post.title}</div>
 		<hr class="mx-2" />

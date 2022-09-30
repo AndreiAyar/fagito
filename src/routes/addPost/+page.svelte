@@ -72,6 +72,9 @@
 		loading.set(true);
 		const formData = new FormData();
 		const postData = {
+			title:'Draft',
+			outputData:STANDARD_BLOCKS_DATA,
+			description:'This is a draft',
 			isDraft: true
 		};
 		formData.append('postData', JSON.stringify(postData));
@@ -108,7 +111,6 @@
 			uploadedImage
 		};
 		formData.append('postData', JSON.stringify(postData));
-		const fss = new FormData();
 
 		let resp = await fetch('?/updatePost', {
 			method: 'POST',

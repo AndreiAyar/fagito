@@ -5,7 +5,7 @@ import { generateTokens } from '$root/lib/utils';
  
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.userData) {
-		throw redirect(302, '/');
+		throw redirect(302, '/account');
 	}
 };
 

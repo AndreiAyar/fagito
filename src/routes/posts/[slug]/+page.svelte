@@ -10,7 +10,7 @@
 	import { onMount } from 'svelte';
 	import ProductsNeeded from '../components/ProductsNeeded.svelte';
 	const parser = new edjsParser();
-	const parsedData = data && data.content && parser.parse(data.content);
+	const parsedData = data && data.content &&  parser.parse(data.content);
 	export let form: Action;
 
 	const mainVendors = () => {
