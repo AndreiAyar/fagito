@@ -19,6 +19,7 @@ jobs:
           build: npm run build
           start: npm start
   deploy:
+    needs: cypress-run
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
