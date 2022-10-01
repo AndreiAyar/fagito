@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Action, PageData } from './$types';
+	import type { Action } from './$types';
 	import { enhance } from '$app/forms';
 	import chef from '$lib/assets/chef.svg';
 	export let form: Action;
@@ -35,8 +35,6 @@
 		{#if form && form.message} <p class="bg-warning-500 rounded-b-lg p-2">{form.message}</p> {/if}
 
 		{#if form?.success}
-			<!-- this message is ephemeral; it exists because the page was rendered in
-       response to a form submission. it will vanish if the user reloads -->
 			<p>Successfully logged in!</p>
 		{/if}
 		<button class="btn mt-2 bg-blue-300 rounded-lg" type="submit">Log in</button>

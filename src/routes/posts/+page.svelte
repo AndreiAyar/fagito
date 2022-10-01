@@ -12,10 +12,8 @@
 	export let data: PostsType;
 	$: currentPage = $page.url.searchParams.get('page') as any;
 	$: currentAuthor = $page.url.searchParams.get('author') as any;
-	$: console.log('total',currentAuthor, data.totalPages);
 	let filterHidden:boolean = true;
 	const storeSingleAutohr: Writable<number> = writable(-1);
-	$: $storeSingleAutohr, console.log("a", $storeSingleAutohr)
 	$:data, filterHidden = true
 </script>
 
@@ -42,8 +40,6 @@
 		>Add a post if you want to share your great recepies 😊 !</a
 	>
 	</div>
-
-
 
 	{#if !data.posts.length}
 		<div>Nothing here 😊</div>

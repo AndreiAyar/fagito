@@ -58,7 +58,7 @@
 
 	<div class="m-auto  pt-12 pb-20 my-8">
 		<div id="latest-products" class="container m-auto">
-			<h1 class="text-center p-4">Latest Added Products</h1>
+			<h1 class="text-center p-4">Our top authors</h1>
 			<p class="text-gray-600 max-w-3xl  m-auto">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
 				labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo

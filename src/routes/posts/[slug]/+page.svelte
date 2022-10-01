@@ -77,7 +77,7 @@
 		<form
 		method="POST"
 		action="?/editPost"
-		use:enhance={({ form, data, cancel }) => {
+		use:enhance={() => {
 			return async ({ result }) => {
 				await applyAction(result);
 				if (result.data.success) {

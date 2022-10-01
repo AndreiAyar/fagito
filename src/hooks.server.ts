@@ -21,27 +21,18 @@ export const handle: Handle = async ({ event, resolve }) => {
 			if (oldRefreshToken) {
 				const currentUser = jwt.verify(oldRefreshToken, SECRET) as JwtPayload;
 				const { refreshToken, token } = generateTokens({email: currentUser.email, username:currentUser.username, id:currentUser.id});
-				// event.locals.user = currentUser.user;
 				event.cookies.set('token', token, {
 					// send cookie for every page
 					path: '/',
 					// server side only cookie so you can't use `document.cookie`
 					httpOnly: true,
-					// only requests from same site can send cookies
-					// https://developer.mozilla.org/en-US/docs/Glossary/CSRF
 					sameSite: 'strict',
-					// only sent over HTTPS in production
 					secure: process.env.NODE_ENV === 'production',
-					// set cookie to expire after a 15 min
 					maxAge: 86400
 				});
 				event.cookies.set('refreshToken', refreshToken, {
-					// send cookie for every page
 					path: '/',
-					// server side only cookie so you can't use `document.cookie`
 					httpOnly: true,
-					// only requests from same site can send cookies
-					// https://developer.mozilla.org/en-US/docs/Glossary/CSRF
 					sameSite: 'strict',
 					// only sent over HTTPS in production
 					secure: process.env.NODE_ENV === 'production',

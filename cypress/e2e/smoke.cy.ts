@@ -26,8 +26,6 @@ describe('Login page', () => {
 	it('Should login with default user', () => {
 		cy.get('#email').click();
 		cy.get('#email').type('nopermissionuser@fagito.com');
-	});
-	it('Should login with default user', () => {
 		cy.get('#password').type('nopermissionblank').type('{enter}');
 	});
 	it('Should redirect to account', () => {

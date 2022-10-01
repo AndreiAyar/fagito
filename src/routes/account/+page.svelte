@@ -29,7 +29,7 @@
 	<div class="container m-auto text-center">
 		<div class="grid lg:grid-cols-3 gap-4 mx-20 mt-4">
 			{#if !data.posts.length}
-				<div>Nothing here 😊</div>
+				<div class="absolute left-[50%] -translate-x-[50%]">Nothing here 😊</div>
 			{/if}
 			{#if data && data.posts}
 				{#each data.posts as post}

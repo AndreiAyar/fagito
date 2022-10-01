@@ -34,7 +34,8 @@ export const load: PageServerLoad = async ({ url }) => {
             where:{
               posts:{
                   some:{
-                      enabled:1
+                      enabled:1,
+					  isDraft:false
                   }
               }
             },

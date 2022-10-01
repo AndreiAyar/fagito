@@ -30,7 +30,7 @@
 				name="searchValue"
 				type="text"
 				bind:value={searchValue}
-				placeholder="Caut mai specific.."
+				placeholder="Be more specific.."
 			/>
 		</div>
 
