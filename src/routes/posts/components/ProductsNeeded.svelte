@@ -63,7 +63,8 @@
 							postGrocery.neededQuantity,
 							postGrocery.grocery.lastPrice || 1,
 							postGrocery.quantity
-						)} RON
+						)} RON,
+						QTY:{postGrocery.neededQuantity}
 					</p>
 				</div>
 
