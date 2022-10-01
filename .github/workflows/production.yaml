@@ -22,6 +22,10 @@ jobs:
           AUTH_TOKEN_CRAWLER:  ${{ secrets.AUTH_TOKEN_CRAWLER }}
       - name: Cypress run
         uses: cypress-io/github-action@v4.2.0 # use the explicit version number
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET:  ${{ secrets.JWT_SECRET }}
+          AUTH_TOKEN_CRAWLER:  ${{ secrets.AUTH_TOKEN_CRAWLER }}
         with:
           browser: chrome
           build: npm run build
