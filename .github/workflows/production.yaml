@@ -26,9 +26,6 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET:  ${{ secrets.JWT_SECRET }}
           AUTH_TOKEN_CRAWLER:  ${{ secrets.AUTH_TOKEN_CRAWLER }}
-          CYPRESS_DATABASE_URL: postgresql://f_user_atigo:Lqwer-%21%21%3F%3F%28%23%26%24%21%5E%28%23%21%2922sllQAL2AfLslkQK@fatigopostgresql.cmtcffskmffu.us-east-1.rds.amazonaws.com:5432/fatigo_db?schema=public
-          CYPRESS_JWT_SECRET: 2JAMBOeNLASXC020@@xcQ@23@3@s!3QpUfOV4whjeSQFz4oUGW2s0CSM4gEHyOClOQrc8ZyCgvdwfQTgKSa76B
-          CYPRESS_AUTH_TOKEN_CRAWLER: I1FSX0BP#cjItMGlmZWtjc21mX0AjUiRVQCN5OHdlZnMwLW@YwYWZhb01AISFAKV8xMjAx13239#*#&@!@*(8!@sydah
         with:
           browser: chrome
           build: npm run build
