@@ -58,12 +58,15 @@
 					<p class="bg-green-400 top-8 left-16 px-[5px] rounded-lg">
 						{postGrocery.grocery.lastPrice} RON
 					</p>
+
 					<p class="bg-blue-400 top-8 left-16 px-[5px] rounded-lg">
 						Portion:{calculatePrice(
 							postGrocery.neededQuantity,
 							postGrocery.grocery.lastPrice || 1,
 							postGrocery.quantity
-						)} RON,
+						)} RON
+					</p>
+					<p class="absolute left-[90px] -bottom-7 bg-yellow-700 px-1 rounded-lg">
 						QTY:{postGrocery.neededQuantity}
 					</p>
 				</div>
