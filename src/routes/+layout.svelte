@@ -53,3 +53,6 @@
 		</div></svelte:fragment
 	>
 </AppShell>
+<!-- <AppShell>
+	<!-- <slot /> -->
+<!-- </AppShell> --> 

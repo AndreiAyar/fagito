@@ -1,7 +1,8 @@
 import prisma from '../../lib/prisma';
-import { invalid, type Actions, type Load } from '@sveltejs/kit';
+import { invalid, redirect, type Actions, type Load } from '@sveltejs/kit';
 import { validateEmail } from './utils/index';
 export const load: Load = async () => {
+	//throw redirect(302,'/')
 	const data = await prisma.user.findMany();
 	return {
 		users: data
