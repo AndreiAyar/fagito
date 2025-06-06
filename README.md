@@ -1,38 +1,84 @@
-# create-svelte
+# Fagito – Dynamic Recipe Pricing App
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Fagito is a SvelteKit-powered application for recipe management with real-time ingredient pricing. It leverages a modern serverless architecture and integrates multiple AWS services to provide accurate, up-to-date cost calculations for recipes based on live product prices.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Dynamic Recipe Pricing:**  
+  Calculates the cost per portion for recipes using real-time crawled data from grocery websites. Ingredient quantities (e.g., grams of flour or sugar) are factored into the price calculation.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- **Real-Time Data Crawling:**  
+  Utilizes AWS Lambda and Puppeteer-based crawlers to fetch live product prices. Asynchronous crawling is managed via AWS SQS and API Gateway, with results stored in AWS RDS.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- **Serverless Architecture:**  
+  Integrates AWS Lambda, SQS, API Gateway, S3, and RDS for scalable, cost-effective, and highly available backend services.
 
-## Developing
+- **Custom Recipe Editor:**  
+  Authenticated users can add and edit recipes using a rich text editor (Editor.js), supporting embedded images, tables, and lists.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- **User Authentication & Management:**  
+  Secure user registration and login, with personalized recipe and grocery management.
 
-```bash
-npm run dev
+- **Responsive UI:**  
+  Styled with Tailwind CSS and Skeleton UI for a modern, mobile-friendly interface.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+- **Testing:**  
+  End-to-end tests are implemented using Cypress to ensure reliability and consistent user experience.
 
-## Building
+## Technical Stack
 
-To create a production version of your app:
+- **Frontend:** SvelteKit, Tailwind CSS, Skeleton UI, Editor.js
+- **Backend:** Prisma ORM, PostgreSQL (AWS RDS), AWS Lambda, SQS, API Gateway, S3
+- **Web Crawling:** Puppeteer (via AWS Lambda)
+- **Authentication:** Custom logic with Prisma
+- **Testing:** Cypress
 
-```bash
-npm run build
-```
+## Key Code Features
 
-You can preview the production build with `npm run preview`.
+- **Live Price Calculation:**  
+  The backend fetches and updates grocery prices in real-time, storing price history and enabling accurate recipe cost breakdowns.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- **Ingredient Management:**  
+  Users can search, add, and manage groceries, with each product linked to live vendor data and price history.
+
+- **Recipe Management:**  
+  Recipes are linked to users and ingredients, supporting drafts, publishing, and editing with a rich editor.
+
+- **Scalable Data Model:**  
+  See [`prisma/schema.prisma`](prisma/schema.prisma) for the full relational data model, including users, groceries, posts (recipes), vendors, and price history.
+
+## Getting Started
+
+1. **Install dependencies:**  
+   ```sh
+   npm install
+   ```
+
+2. **Set up environment variables:**  
+   Copy `.env.example` to `.env` and configure your database and AWS credentials.
+
+3. **Run database migrations:**  
+   ```sh
+   npx prisma migrate dev
+   ```
+
+4. **Start the development server:**  
+   ```sh
+   npm run dev
+   ```
+
+5. **Run tests:**  
+   ```sh
+   npm run test
+   ```
+
+## Folder Structure
+
+- `src/` – SvelteKit routes, components, and stores
+- `prisma/` – Prisma schema and migrations
+- `cypress/` – Cypress end-to-end tests
+- `static/` – Static assets
+
+---
+
+For more details, see the code and comments throughout the project.
